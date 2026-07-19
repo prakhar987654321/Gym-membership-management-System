@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB
 mongoose
-  .connect( "mongodb://127.0.0.1:27017/flexgym")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("DB Error:", err));
 
@@ -84,7 +84,7 @@ app.get("/api/dashboard/stats", function(req, res){
 });
 
 // Members
-app.get("members", (req, res) => {
+app.get("/members", (req, res) => {
   Member.find().sort({ createdAt: -1 })//sabse naya member upar
     .then((members) =>
        res.json(members)
